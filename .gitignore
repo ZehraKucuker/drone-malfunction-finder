@@ -1,0 +1,76 @@
+# ---- OS / Editor ----
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+.history/
+
+# ---- Environment & Secrets ----
+.env
+.env.*
+*.env.local
+*.local
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+ENV/
+.ipynb_checkpoints/
+.mypy_cache/
+.pytype/
+.pytest_cache/
+.coverage*
+htmlcov/
+.cache/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ---- Node / JS ----
+node_modules/
+.npm/
+.npmrc.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.eslintcache
+
+# Coverage / tooling
+coverage/
+.nyc_output/
+
+# ---- Vite / Frontend ----
+# Vite build output
+/drone_fault_detection_web/dist/
+# Vite cache (if present)
+.drone_fault_detection_web/.vite/
+
+# ---- Docker / runtime ----
+*.pid
+*.pid.lock
+
+# ---- Project-specific ----
+# File uploads (generated at runtime by API)
+/drone_fault_detection_api/uploads/
+
+# Large datasets (training/evaluation data)
+/drone_fault_detection_model/dataset/
+
+# Exclude trained model weights/binaries
+/drone_fault_detection_model/models/**/*.pth
+/drone_fault_detection_model/models/**/*.pt
+/drone_fault_detection_model/models/**/*.onnx
+/drone_fault_detection_model/models/**/*.ckpt
+/drone_fault_detection_model/models/**/*.h5
+/drone_fault_detection_model/models/**/*.tflite
