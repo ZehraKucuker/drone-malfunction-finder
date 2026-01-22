@@ -1,0 +1,67 @@
+{
+  "task": "drone_type",
+  "classes": [
+    "Helikopter",
+    "Duokopter",
+    "Trikopter",
+    "Quadkopter"
+  ],
+  "num_classes": 4,
+  "model_name": "vit_base_patch16_224",
+  "image_size": 224,
+  "training_config": {
+    "batch_size": 32,
+    "num_epochs": 20,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001
+  },
+  "test_results": {
+    "accuracy": 1.0,
+    "classification_report": {
+      "Helikopter": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 227.0
+      },
+      "Duokopter": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 244.0
+      },
+      "Trikopter": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 240.0
+      },
+      "Quadkopter": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 237.0
+      },
+      "accuracy": 1.0,
+      "macro avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 948.0
+      },
+      "weighted avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 948.0
+      }
+    }
+  },
+  "training_history": {
+    "final_train_loss": 0.000500313010343893,
+    "final_train_acc": 0.9997736019923025,
+    "final_val_loss": 0.005990901753358013,
+    "final_val_acc": 0.9989429175475687
+  },
+  "created_at": "2026-01-04T17:16:07.622053"
+}
