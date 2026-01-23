@@ -1,0 +1,14 @@
+# ML Service Requirements
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+
+# Existing model requirements
+torch>=2.0.0
+torchvision>=0.15.0
+timm>=0.9.12
+Pillow>=10.0.0
+numpy>=1.24.0
+librosa>=0.10.0
+soundfile>=0.12.0
+matplotlib>=3.7.0
