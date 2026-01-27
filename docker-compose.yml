@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  # RethinkDB Database
+  rethinkdb:
+    image: rethinkdb:2.4.2
+    container_name: drone_rethinkdb
+    ports:
+      - "28015:28015"  # Client driver port
+      - "8080:8080"    # Admin UI
+    volumes:
+      - rethinkdb_data:/data
+    networks:
+      - drone_network
+    restart: unless-stopped
+
+  # Python ML Service
+  ml-service:
+    build:
+      context: .
+      dockerfile: drone_fault_detection_api/Dockerfile.ml
+    container_name: drone_ml_service
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./drone_fault_detection_model:/app/drone_fault_detection_model:ro
+    networks:
+      - drone_network
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    # GPU yoksa bu satırları yoruma alın
+
+  # Node.js API
+  api:
+    build:
+      context: ./drone_fault_detection_api
+      dockerfile: Dockerfile
+    container_name: drone_api
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - RETHINKDB_HOST=rethinkdb
+      - RETHINKDB_PORT=28015
+      - RETHINKDB_DB=drone
+      - ML_SERVICE_URL=http://ml-service:5000
+    volumes:
+      - api_uploads:/app/uploads
+    depends_on:
+      - rethinkdb
+      - ml-service
+    networks:
+      - drone_network
+    restart: unless-stopped
+
+  # React Web (Production)
+  web:
+    build:
+      context: ./drone_fault_detection_web
+      dockerfile: Dockerfile
+    container_name: drone_web
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    networks:
+      - drone_network
+    restart: unless-stopped
+
+networks:
+  drone_network:
+    driver: bridge
+
+volumes:
+  rethinkdb_data:
+  api_uploads:

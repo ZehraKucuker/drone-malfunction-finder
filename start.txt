@@ -1,0 +1,121 @@
+================================================================================
+                    DroneAI Sense - Projeyi Başlatma Rehberi
+================================================================================
+
+ÖNEMLİ: Tüm komutları sırasıyla çalıştırın. Her adımın tamamlandığından emin olun.
+
+================================================================================
+ADIM 1: RethinkDB Veritabanını Başlat (Docker)
+================================================================================
+
+Terminal açın ve proje ana klasörüne gidin:
+
+    cd "c:\Users\kucuk\OneDrive\Masaüstü\Bitirme Projesi\project"
+    docker-compose -f docker-compose.dev.yml up -d
+
+Kontrol: http://localhost:8080 adresinde RethinkDB Admin Panel açılmalı
+
+================================================================================
+ADIM 2: Python ML Servisini Başlat
+================================================================================
+
+YENİ bir terminal açın:
+
+    cd "c:\Users\kucuk\OneDrive\Masaüstü\Bitirme Projesi\project\drone_fault_detection_api"
+    python ml_service.py
+
+Beklenen çıktı:
+    ✅ Model modülleri başarıyla import edildi
+    🔄 Modeller yükleniyor...
+    ✅ Spektrogram dönüştürücü hazır
+    ✅ Drone tipi modeli yüklendi
+    ✅ Arıza tipi modeli yüklendi
+    🚀 Tüm modeller başarıyla yüklendi!
+    INFO: Uvicorn running on http://0.0.0.0:5000
+
+Kontrol: http://localhost:5000 adresinde ML servisi çalışmalı
+
+================================================================================
+ADIM 3: Node.js API Servisini Başlat
+================================================================================
+
+YENİ bir terminal açın:
+
+    cd "c:\Users\kucuk\OneDrive\Masaüstü\Bitirme Projesi\project\drone_fault_detection_api"
+    npm start
+
+Beklenen çıktı:
+    ✅ RethinkDB bağlantısı başarılı
+    🚀 Server running on http://localhost:3001
+
+Kontrol: http://localhost:3001 adresinde API çalışmalı
+
+================================================================================
+ADIM 4: React Web Arayüzünü Başlat
+================================================================================
+
+YENİ bir terminal açın:
+
+    cd "c:\Users\kucuk\OneDrive\Masaüstü\Bitirme Projesi\project\drone_fault_detection_web"
+    npm run dev
+
+Beklenen çıktı:
+    VITE v5.x.x ready
+    ➜ Local: http://localhost:3000/
+
+Kontrol: http://localhost:3000 adresinde web arayüzü açılmalı
+
+================================================================================
+TÜM SERVİSLER ÇALIŞIYOR MU? KONTROL LİSTESİ
+================================================================================
+
+[  ] RethinkDB Admin     : http://localhost:8080
+[  ] ML Servisi (Python) : http://localhost:5000
+[  ] API (Node.js)       : http://localhost:3001
+[  ] Web Arayüzü (React) : http://localhost:3000
+
+================================================================================
+İLK KURULUM (Sadece bir kez yapılır)
+================================================================================
+
+Eğer projeyi ilk kez çalıştırıyorsanız, bağımlılıkları yükleyin:
+
+1. API Bağımlılıkları:
+    cd drone_fault_detection_api
+    npm install
+
+2. Web Bağımlılıkları:
+    cd drone_fault_detection_web
+    npm install
+
+3. Python Bağımlılıkları:
+    cd drone_fault_detection_api
+    pip install -r requirements.txt
+
+================================================================================
+SERVİSLERİ DURDURMA
+================================================================================
+
+- Her terminalde Ctrl+C ile durdurun
+- Docker'ı durdurmak için:
+    docker-compose -f docker-compose.dev.yml down
+
+================================================================================
+SORUN GİDERME
+================================================================================
+
+1. Port kullanımda hatası:
+   - İlgili portu kullanan işlemi bulun: netstat -ano | findstr :3001
+   - İşlemi durdurun: taskkill /PID <PID> /F
+
+2. RethinkDB bağlantı hatası:
+   - Docker'ın çalıştığından emin olun: docker ps
+   - Container'ı yeniden başlatın: docker restart drone_rethinkdb_dev
+
+3. ML Servisi modül hatası:
+   - Python path'ini kontrol edin
+   - Bağımlılıkları yeniden yükleyin: pip install -r requirements.txt
+
+4. Network Error:
+   - Tüm servislerin çalıştığından emin olun
+   - ML servisinin modellerinin yüklendiğini kontrol edin

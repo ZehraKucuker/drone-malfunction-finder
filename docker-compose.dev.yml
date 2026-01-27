@@ -1,0 +1,24 @@
+version: '3.8'
+
+# Geliştirme ortamı için Docker Compose
+# Kullanım: docker-compose -f docker-compose.dev.yml up
+
+services:
+  # RethinkDB Database
+  rethinkdb:
+    image: rethinkdb:2.4.2
+    container_name: drone_rethinkdb_dev
+    ports:
+      - "28015:28015"
+      - "8080:8080"
+    volumes:
+      - rethinkdb_data_dev:/data
+    networks:
+      - drone_network_dev
+
+networks:
+  drone_network_dev:
+    driver: bridge
+
+volumes:
+  rethinkdb_data_dev:
